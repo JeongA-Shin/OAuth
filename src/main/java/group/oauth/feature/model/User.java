@@ -38,7 +38,7 @@ public class User {
   private String password;
 
   @Column
-  private String role;
+  private String role; //최고 관리자, 관리자, 일반
 
   @OneToMany //조인할 대상 테이블의 컬럼이 있어야겠지요? 이게 바로 referencedColumnName
   @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
