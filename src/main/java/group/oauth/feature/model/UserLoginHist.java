@@ -1,6 +1,5 @@
 package group.oauth.feature.model;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
 
@@ -31,7 +31,8 @@ public class UserLoginHist {
   @Column(name = "user_id")
   private UUID userId;
 
-  @Column
+  @Column(name="login_dt")
+  @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
   private DateTime loginDt;
 
   public void defaultValue() {

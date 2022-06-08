@@ -7,7 +7,7 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserLoginHistRepository extends JpaRepository<UUID, UserLoginHist>,
+public interface UserLoginHistRepository extends JpaRepository<UserLoginHist,UUID>,
     QuerydslPredicateExecutor<UserLoginHist> {
 
 }

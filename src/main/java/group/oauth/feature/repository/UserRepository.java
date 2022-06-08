@@ -8,7 +8,7 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<UUID, User>, QuerydslPredicateExecutor<User> {
+public interface UserRepository extends JpaRepository<User,UUID>, QuerydslPredicateExecutor<User> {
 
   Optional<User> findByLoginId(String loginId);
 
