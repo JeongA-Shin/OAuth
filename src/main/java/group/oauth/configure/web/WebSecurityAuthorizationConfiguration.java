@@ -11,6 +11,9 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
+//클라이언트와 토큰 관리는 Spring Security OAuth 모듈이 담당하지만 사용자 관리는 Spring Security의 몫이다
+//따라서 사용자를 관리하는 spring security는 securityConfig에 따로 설정을 해놓았다
+
 //Oauth 개념 중 AuthorizationServer에 대한 설정
 @Configuration
 @RequiredArgsConstructor
@@ -25,6 +28,15 @@ public class WebSecurityAuthorizationConfiguration extends AuthorizationServerCo
 
   private final UserDetailsService userDetailsService;
 
+  /**
+   * API의 요청 클라이언트 정보를 설정
+   *
+   * <pre>
+   * OAuth Client ID, Client Secret 정의
+   * 앱에 접속할 클라이언트는 한정되어 있어 인메모리 방식 사용
+   * 동적으로 클라이언트 생성이 필요하면 DB 관리방식으로 변경
+   * </pre>
+   */
   @Override
   public void configure(ClientDetailsServiceConfigurer clients) throws Exception { // API의 요청 클라이언트 정보를 설정
     clients.inMemory() //inMemory()는 클라이언트(=나. 개발자. 애플리케이션) 정보를 메모리에 저장 개발 환경에 적합 //jdbc()는 데이터베이스에 저장한다. 운영 환경에 적합하다.
@@ -43,12 +55,13 @@ public class WebSecurityAuthorizationConfiguration extends AuthorizationServerCo
         .refreshTokenValiditySeconds(60 * 60 * 60);
   }
 
-  //클라이언트와 토큰 관리는 Spring Security OAuth 모듈이 담당하지만 사용자 관리는 Spring Security의 몫이다
-  //따라서 사용자를 관리하는 spring security는 securityConfig에 따로 설정을 해놓았다
 
+  /**
+   * 인증서버 엔드포인트 속성? 설정
+   */
   @Override
   public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {//인증, 토큰엔드포인트, 토큰 서비스를 정의 할 수 있다.
-    //endpoint는 authorization server가 동작하는 포인트
+    //endpoint는  OAuth 권한 부여 요청을 하는 데 사용하는 URL
     endpoints.tokenStore(tokenStore) // 즉, 인증 서버에 token store를 등록
         .authenticationManager(authenticationManager) // 인증 서버에 인증 매니저를 등록
         .userDetailsService(userDetailsService); // 인증 서버에 userDetailsService를 등록

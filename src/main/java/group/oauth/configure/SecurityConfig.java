@@ -18,7 +18,7 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 //클라이언트와 토큰 관리는 Spring Security OAuth 모듈이 담당하지만 사용자 관리는 Spring Security의 몫이다
 //따라서 사용자를 관리하는 spring security는 securityConfig에 따로 설정을 해놓았다
 
-//인증 요청을 처리하려면 사용자 저장소에 접근할 수 있어야 한다.
+//인증 요청을 처리하려면 사용자 저장소(DB)에 접근할 수 있어야 한다.
 
 @Configuration
 @EnableWebSecurity
@@ -29,12 +29,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final UserDetailsServiceImpl userDetailsService;
 
-
+  /**
+   * 인증 매니저 생성 - 생성자
+   */
   @Bean
   @Override
-  protected AuthenticationManager authenticationManager() throws Exception { //얘가 시작점임.
-    return super.authenticationManager(); //인자로 받은 Authentication이 유효한 인증인지 확인하고,  "Authentication" 객체를 리턴
+  protected AuthenticationManager authenticationManager() throws Exception {
+    return super.authenticationManager();
   }
+
 
   @Bean
   public PasswordEncoder encoder() {
@@ -43,12 +46,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     return PasswordEncoderFactories.createDelegatingPasswordEncoder();
   }
 
+  /**
+   * 토큰저장소
+   *
+   * <pre>
+   * OAuth 발행하는 토큰을 관리하는 저장소
+   * 단일서버로 인메모리 저장소 사용
+   * </pre>
+   */
   @Bean
   public TokenStore tokenStore() {
     return new InMemoryTokenStore();
   } //token store로 JWTTokenStore를 사용하겠다
 
-  //인증 객체 만들기
+  /**
+   * 웹 인증 매니저 설정 (빌더를 통해 매니저 빌드)
+   */
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     //AuthenticationManagerBuilder를 통해 인증 객체를 만들 수 있도록 제공하고 있습니다
