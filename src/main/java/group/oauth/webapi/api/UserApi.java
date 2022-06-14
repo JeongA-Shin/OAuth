@@ -3,6 +3,7 @@ package group.oauth.webapi.api;
 
 import group.oauth.feature.service.UserService;
 import group.oauth.webapi.form.UserForm;
+import group.oauth.webapi.form.UserForm.Output.GetAll;
 import group.oauth.webapi.mapper.UserFormMapper;
 import group.oauth.webapi.predicate.UserFormPredicate;
 import io.swagger.annotations.Api;
