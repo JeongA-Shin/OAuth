@@ -9,7 +9,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.UUID;
-
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.http.MediaType;
@@ -33,7 +32,7 @@ public class UserApi {
   @SneakyThrows
   @ApiOperation("사용자 목록 조회")
   @GetMapping("/get-list")
-  public List<UserForm.Output.GetAll> getList(UserForm.Input.GetAll in) {
+  public List<GetAll> getList(UserForm.Input.GetAll in){
     return formMapper.toGetAllList(service.getList(UserFormPredicate.search(in)));
   }
 

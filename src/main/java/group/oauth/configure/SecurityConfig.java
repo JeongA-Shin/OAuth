@@ -79,7 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .cors().and()//spring-security에서 cors를 적용한다는 설정 //인증 성공 여부와 무관하게 Origin 헤더가 있는 모든 요청에 대해 CORS 헤더를 포함한 응답을 해준다.
         .csrf().disable()//우리가 만들고자 하는 rest api에서는 csrf 공격으로부터 안전하고 매번 api 요청으로부터 csrf 토큰을 받지 않아도 되어 이 기능을 disable() 하는 것이 더 좋은 판단으로 보인다.
         .anonymous().disable()//인증되지 않은 사용자가 접근할 수 없도록(disable) 함
-        .authorizeRequests() //authorizeRequests()는 시큐리티 처리에 HttpServletRequest를 이용한다는 것을 의미합니다.
+        .authorizeRequests() //authorizeRequests()는 시큐리티 처리에 HttpServletRequest를 이용한다는 것을 의미
         .antMatchers("/swagger-ui.html").permitAll(); //ntMatchers()는 특정한 경로를 지정합니다.
     // ///"/swagger-ui.html"에는 전체 접근 허용
     //  .antMatchers("/myPage").hasRole("ADMIN")//admin이라는 롤을 가진 사용자만 접근 허용
